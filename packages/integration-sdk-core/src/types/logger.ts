@@ -5,6 +5,7 @@ import { Metric } from './metric';
 export interface IntegrationEvent {
   name: string;
   description: string;
+  createDate?: number;
 }
 
 interface LogFunction {

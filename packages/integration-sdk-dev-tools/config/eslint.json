@@ -30,7 +30,8 @@
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/await-thenable": "error",
         "@typescript-eslint/require-await": "error",
-        "@typescript-eslint/no-floating-promises": "error"
+        "@typescript-eslint/no-floating-promises": "error",
+        "max-len": ["warn", {"code": 180, "ignoreUrls": true, "ignoreComments": true, "ignoreStrings": true }]
       }
     },
     {

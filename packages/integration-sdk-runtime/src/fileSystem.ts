@@ -11,6 +11,8 @@ import rimraf from 'rimraf';
 import getFolderSize from 'get-folder-size';
 import * as zlib from 'zlib';
 import { promisify } from 'util';
+import { FlushedGraphObjectData } from './storage/types';
+import { readGraphObjectFile } from './storage/FileSystemGraphObjectStore/indices';
 
 const brotliCompress = promisify(zlib.brotliCompress);
 const brotliDecompress = promisify(zlib.brotliDecompress);
@@ -196,6 +198,21 @@ export async function walkDirectory({
   for (const file of files) {
     await handleFilePath(path.resolve(fullPath, file));
   }
+}
+
+export function iterateParsedGraphFiles(
+  iteratee: (parsedData: FlushedGraphObjectData) => Promise<void>,
+) {
+  return walkDirectory({
+    path: 'graph',
+    async iteratee({ filePath }) {
+      const parsed = await readGraphObjectFile<FlushedGraphObjectData>({
+        filePath,
+      });
+
+      await iteratee(parsed);
+    },
+  });
 }
 
 export function isRootStorageDirectoryPresent(): Promise<boolean> {

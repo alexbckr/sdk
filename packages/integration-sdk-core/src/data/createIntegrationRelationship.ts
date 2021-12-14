@@ -131,7 +131,12 @@ type TargetEntity = TargetEntityProperties & {
 type AdditionalRelationshipProperties = {
   _type?: string;
   _key?: string;
-  [key: string]: string | boolean | number | null | undefined;
+  [additionalPropertyName: string]:
+    | string
+    | boolean
+    | number
+    | null
+    | undefined;
 };
 
 function createInvalidateRelationshipClassError(_class: string) {
